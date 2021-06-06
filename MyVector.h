@@ -4,7 +4,7 @@
 #include <math.h>
 #include <utility>
 
-// стратегия изменения capacity
+// СЃС‚СЂР°С‚РµРіРёСЏ РёР·РјРµРЅРµРЅРёСЏ capacity
 enum class ResizeStrategy {
 	Additive,
 	Multiplicative
@@ -14,7 +14,7 @@ template<class T>
 class MyVector
 {
 public:
-	// реализовать итераторы
+	// СЂРµР°Р»РёР·РѕРІР°С‚СЊ РёС‚РµСЂР°С‚РѕСЂС‹
 	class VectorIterator{
 	public:
 		using iterator_category = std::forward_iterator_tag;
@@ -71,11 +71,11 @@ public:
 		T* _ptr;
 	};
 
-	// заполнить вектор значениями T()
+	// Р·Р°РїРѕР»РЅРёС‚СЊ РІРµРєС‚РѕСЂ Р·РЅР°С‡РµРЅРёСЏРјРё T()
 	MyVector(size_t size = 0,
 			 ResizeStrategy = ResizeStrategy::Multiplicative,
 			 float coef = 1.5f);
-	// заполнить вектор значениями value
+	// Р·Р°РїРѕР»РЅРёС‚СЊ РІРµРєС‚РѕСЂ Р·РЅР°С‡РµРЅРёСЏРјРё value
 	MyVector(size_t size,
 			 const T& value,
 			 ResizeStrategy = ResizeStrategy::Multiplicative,
@@ -97,48 +97,48 @@ public:
 	VectorIterator end();
 	ConstVectorIterator cend() const;
 
-	// доступ к элементу,
-	// должен работать за O(1)
+	// РґРѕСЃС‚СѓРї Рє СЌР»РµРјРµРЅС‚Сѓ,
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° O(1)
 	T& at(const size_t idx);
 	const T& at(const size_t idx) const;
 	T& operator[](const size_t idx);
 	const T& operator[](const size_t idx) const;
 
-	// добавить в конец,
-	// должен работать за amort(O(1))
+	// РґРѕР±Р°РІРёС‚СЊ РІ РєРѕРЅРµС†,
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° amort(O(1))
 	void pushBack(const T& value);
-	// вставить,
-	// должен работать за O(n)
+	// РІСЃС‚Р°РІРёС‚СЊ,
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° O(n)
 	void pushFront(const T& value);
-	void insert(const size_t idx, const T& value);     // версия для одного значения
-	void insert(const size_t idx, const MyVector<T>& value);      // версия для вектора
-	void insert(ConstVectorIterator it, const T& value);  // версия для одного значения
-	void insert(ConstVectorIterator it, const MyVector<T>& value);   // версия для вектора
+	void insert(const size_t idx, const T& value);     // РІРµСЂСЃРёСЏ РґР»СЏ РѕРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
+	void insert(const size_t idx, const MyVector<T>& value);      // РІРµСЂСЃРёСЏ РґР»СЏ РІРµРєС‚РѕСЂР°
+	void insert(ConstVectorIterator it, const T& value);  // РІРµСЂСЃРёСЏ РґР»СЏ РѕРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
+	void insert(ConstVectorIterator it, const MyVector<T>& value);   // РІРµСЂСЃРёСЏ РґР»СЏ РІРµРєС‚РѕСЂР°
 
-	// удалить с конца,
-	// должен работать за amort(O(1))
+	// СѓРґР°Р»РёС‚СЊ СЃ РєРѕРЅС†Р°,
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° amort(O(1))
 	void popBack();
-	// удалить
-	// должен работать за O(n)
+	// СѓРґР°Р»РёС‚СЊ
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° O(n)
 	void popFront();
 	void erase(const size_t pos);
-	void erase(const size_t pos, size_t len);            // удалить len элементов начиная с i
+	void erase(const size_t pos, size_t len);            // СѓРґР°Р»РёС‚СЊ len СЌР»РµРјРµРЅС‚РѕРІ РЅР°С‡РёРЅР°СЏ СЃ i
 
-	// найти элемент,
-	// должен работать за O(n)
-	// если isBegin == true, найти индекс первого элемента, равного value, иначе последнего
-	// если искомого элемента нет, вернуть end
+	// РЅР°Р№С‚Рё СЌР»РµРјРµРЅС‚,
+	// РґРѕР»Р¶РµРЅ СЂР°Р±РѕС‚Р°С‚СЊ Р·Р° O(n)
+	// РµСЃР»Рё isBegin == true, РЅР°Р№С‚Рё РёРЅРґРµРєСЃ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°, СЂР°РІРЅРѕРіРѕ value, РёРЅР°С‡Рµ РїРѕСЃР»РµРґРЅРµРіРѕ
+	// РµСЃР»Рё РёСЃРєРѕРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РЅРµС‚, РІРµСЂРЅСѓС‚СЊ end
 	ConstVectorIterator find(const T& value, bool isBegin = true);
 
-	// зарезервировать память (принудительно задать capacity)
+	// Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°С‚СЊ РїР°РјСЏС‚СЊ (РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ Р·Р°РґР°С‚СЊ capacity)
 	void reserve(const size_t newCapacity);
 
-	// изменить размер
-	// если новый размер больше текущего, то новые элементы забиваются value
-	// если меньше - обрезаем вектор
+	// РёР·РјРµРЅРёС‚СЊ СЂР°Р·РјРµСЂ
+	// РµСЃР»Рё РЅРѕРІС‹Р№ СЂР°Р·РјРµСЂ Р±РѕР»СЊС€Рµ С‚РµРєСѓС‰РµРіРѕ, С‚Рѕ РЅРѕРІС‹Рµ СЌР»РµРјРµРЅС‚С‹ Р·Р°Р±РёРІР°СЋС‚СЃСЏ value
+	// РµСЃР»Рё РјРµРЅСЊС€Рµ - РѕР±СЂРµР·Р°РµРј РІРµРєС‚РѕСЂ
 	void resize(const size_t newSize, const T& value = T());
 
-	// очистка вектора, без изменения capacity
+	// РѕС‡РёСЃС‚РєР° РІРµРєС‚РѕСЂР°, Р±РµР· РёР·РјРµРЅРµРЅРёСЏ capacity
 	void clear();
 
 	void reallocVector(const size_t newSize = size());
